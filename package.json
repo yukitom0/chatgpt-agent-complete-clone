@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node orchestrator/orchestrator.js",
     "run-browser": "node browser_worker/browser_worker.js",
-    "run-scheduler": "node scheduler/scheduler.js"
+    "run-scheduler": "node scheduler/scheduler.js",
+    "run-terminal": "node terminal_worker/worker.js",
+    "run-python": "python3 python_worker/worker.py"
   },
   "dependencies": {
     "express": "^4.18.2",
