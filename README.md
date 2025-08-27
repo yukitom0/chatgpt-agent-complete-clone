@@ -63,4 +63,12 @@ This repository is a skeleton implementation inspired by OpenAI's ChatGPT Agent 
    curl -X POST -H "Content-Type: application/json" -d '{"cron":"*/5 * * * *"}' http://localhost:3000/schedule-python
    ```
 
-This project is for educational and demonstration purposes. It does not implement all security, error handling, or production considerations that a full ChatGPT Agent mode would require.
+
+
+## Computer Using Agent considerations
+
+Our focus is on replicating ChatGPT Agent mode features in a server-side environment, but it is possible to combine this with a computer-using agent (CUA) that interacts with a graphical desktop. A full CUA requires an implementation of the `Computer` interface (handles actions like `click`, `scroll`, `type`, `keypress`, etc.) and an agent loop that sends these actions to your environment【606231921535403†L44-L49】【606231921535403†L56-L74】. The [openai-cua-sample-app](https://github.com/openai/openai-cua-sample-app) is a useful reference: it defines a `Computer` interface for different environments (local browser, Docker, remote browser) and a simple agent loop, and documents the supported actions like `click(x,y)`, `type(text)`, `scroll`, etc.【606231921535403†L68-L71】【606231921535403†L116-L126】. You can adapt those patterns to integrate this repository with a CUA workflow.
+
+When running this project in a computer-using environment (such as a VM or remote desktop on Azure), you can manually open desktop applications like LibreOffice or a web browser using the provided tools. For example, the `computer` tool's `switch_app` API can launch LibreOffice or Chrome, allowing you to edit documents/spreadsheets or browse the web interactively. The `browser` tool is also available for text-only web access. Integrating these capabilities into the orchestrator would require sending CUA actions to your computer environment; see the sample app for guidance.
+project is for educational and demonstration purposes. It does not implement all security, error handling, or production considerations that a full ChatGPT Agent mode would require.
+
