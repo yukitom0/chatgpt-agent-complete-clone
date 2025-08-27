@@ -1,0 +1,13 @@
+{
+  "name": "ChatGPT Agent Clone",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.node-debug2",
+        "ms-python.python"
+      ]
+    }
+  }
+}
