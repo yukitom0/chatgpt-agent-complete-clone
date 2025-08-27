@@ -1,0 +1,16 @@
+{
+  "name": "chatgpt-agent-complete-clone",
+  "version": "1.0.0",
+  "description": "A skeleton implementation replicating ChatGPT Agent's functionalities.",
+  "main": "orchestrator/orchestrator.js",
+  "scripts": {
+    "start": "node orchestrator/orchestrator.js",
+    "run-browser": "node browser_worker/browser_worker.js",
+    "run-scheduler": "node scheduler/scheduler.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-schedule": "^2.1.1",
+    "playwright": "^1.42.0"
+  }
+}
