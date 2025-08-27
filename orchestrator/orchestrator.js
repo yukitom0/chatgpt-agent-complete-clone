@@ -3,8 +3,10 @@ const { exec } = require('child_process');
 const path = require('path');
 const schedule = require('node-schedule');
 const { fetchGmail, fetchCalendar } = require('../connectors');
+const remoteComputer = require('../remote_computer');
 
 const app = express();
+app.use(express.json());
 
 // Run Python worker
 app.get('/run-python', (req, res) => {
@@ -61,17 +63,41 @@ app.get('/fetch-calendar', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch calendar data' });
   }
+})
+  // Remote GUI operation endpoints
+// Open LibreOffice on the remote VM and optionally load a document.
+app.post('/remote-open-libreoffice', async (req, res) => {
+  const { documentPath } = req.body || {};
+  try {
+    await remoteComputer.openLibreOffice(documentPath);
+    res.json({ message: 'Launched LibreOffice Writer remotely' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
 });
 
+// Open a browser on the remote VM at the specified URL.
+app.post('/remote-open-browser', async (req, res) => {
+  const { url } = req.body || {};
+  try {
+    await remoteComputer.openBrowser(url);
+    res.json({ message: 'Launched browser remotely' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+});
+
+
 // Schedule Python worker using a cron expression in request body
-app.use(express.json());
-app.post('/schedule-python', (req, res) => {
-  const { cron } = req.body;
+appp.post('/schedule-python', (req, res) => {
+  
   if (!cron) {
     return res.status(400).json({ error: 'cron expression required' });
   }
   try {
-    const job = schedule.scheduleJob(cron, () => {
+    
       exec('python3 python_worker/worker.py', { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
         if (error) {
           console.error('Scheduled Python worker error:', error);
