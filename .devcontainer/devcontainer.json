@@ -9,5 +9,7 @@
         "ms-python.python"
       ]
     }
-  }
+  },
+  "forwardPorts": [3000],
+  "postStartCommand": "npm start"
 }
